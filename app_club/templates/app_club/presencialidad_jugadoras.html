@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+{% load static %}    
+<head>
+    <meta charset="UTF-8">
+    <title>Actividad</title>
+    <link rel="stylesheet" href="{% static 'app_club/css/style_actividad.css' %}">
+</head>
+
+<body>
+
+<div class="header">
+    <img src="{% static 'img/logo_club.png' %}" alt="Logo">
+    <h1> Cargar Actividad</h1>
+
+    <div class="right-info">
+        <div><strong>HOCKEY DATA ENTRY</strong></div>
+        <div>Usuario: {{ user.username }}</div>
+         <div>
+            <a href="{% url 'logout' %}" class="logout-link">⏻</a>
+            <a href="{% url 'app_club:areas' %}" class="logout-link">↩</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="contenedor-tabla">
+
+    <!-- TARJETA DERECHA → PRESENCIALIDAD -->
+    <div class="card-presencialidad">
+
+        {% if actividad %}
+
+            <h2>{{ actividad.tipo }} – {{ actividad.fecha }} - {{ actividad.rama }}</h2>
+
+            <form method="post" action="{% url 'app_club:presencialidad_jugadoras' actividad.id %}">
+                {% csrf_token %}
+
+                <table class="base-table">
+                    <thead>
+                        <tr>
+                            <th>Jugadora</th>
+                            <th>Presente</th>
+                            <th>Rendimiento</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for j in jugadoras %}
+                        <tr>
+                            <td>{{ j.nombre }}</td>
+                            <td>
+                                <input type="checkbox" class="chk"
+                                       name="presente_{{ j.id }}">
+                            </td>
+                            <td>
+                                <input type="number" class="rend"
+                                       name="rendimiento_{{ j.id }}"
+                                       min="1" max="10">
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <button type="submit" class="btn">Guardar Presencialidad</button>
+
+            </form>
+
+        {% else %}
+            <div class="no-actividad">
+                NO HAY ACTIVIDAD CARGADA
+            </div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

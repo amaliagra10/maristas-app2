@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Presencialidad Entrenadores</title>
+    <link rel="stylesheet" href="{% static 'app_club/css/style_actividad.css' %}">
+</head>
+
+<body>
+
+<div class="header">
+    <img src="{% static 'img/logo_club.png' %}" alt="Logo EDESTE">
+    <h1>Reporte Entrenadores</h1>
+    <div class="right-info">
+      <div><strong>HOCKEY DATA ENTRY</strong></div>
+      <div>Usuario: {{ user.username }}</div>
+       <div>
+            <a href="{% url 'logout' %}" class="logout-link">⏻</a>
+            <a href="{% url 'app_club:areas' %}" class="logout-link">↩</a>
+        </div>
+    </div>
+  </div>
+
+<div class="page-container">
+<div class="card-full">
+
+    <!-- FILTROS -->
+    <div class="card-section">
+        <form method="get" class="filter-bar">
+            <div class="filter-row">
+
+                <div class="filter-item">
+                    <label><strong>División:</strong></label>
+                    <select name="division">
+                        <option value="">Todas</option>
+                        {% for d in divisiones %}
+                            <option value="{{ d.id }}"
+                            {% if division_seleccionada == d.id|stringformat:"s" %}selected{% endif %}>
+                                {{ d.nombre }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="filter-item">
+                    <label><strong>Rama:</strong></label>
+                    <select name="rama">
+                        <option value="">Todas</option>
+                        {% for r in ramas %}
+                            <option value="{{ r.id }}"
+                            {% if rama_seleccionada == r.id|stringformat:"s" %}selected{% endif %}>
+                                {{ r.nombre }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="filter-item">
+                    <button type="submit" class="btn-filter">🔍 Filtrar</button>
+                </div>
+
+                {% if division_seleccionada or rama_seleccionada %}
+                <div class="filter-item">
+                    <a href="{% url 'app_club:reporte_entrenadores' %}"
+                    class="btn-clear">❌ Limpiar</a>
+                </div>
+                {% endif %}
+
+            </div>
+        </form>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- TABLA -->
+    {% if mostrar_tabla %}
+    <div class="card-section">
+        <table class="base-table">
+            <thead>
+                <tr>
+                    <th>Entrenador</th>
+                    <th>Actividades</th>
+                    <th>% General</th>
+                    <th>%Entrenamiento</th>
+                    <th>%Partido</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for row in data %}
+                <tr>
+                    <td>{{ row.entrenador }}</td>}
+                    <td>{{ row.total_general }}</td>
+                    <td>{{ row.pct_general }}%</td>
+
+                    <td>
+                        {% if row.tipos.Entrenamiento.pct != "-" %}
+                            {{ row.tipos.Entrenamiento.pct }}%
+                            <small>({{ row.tipos.Entrenamiento.total }})</small>
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {% if row.tipos.Partido.pct != "-" %}
+                            {{ row.tipos.Partido.pct }}%
+                            <small>({{ row.tipos.Partido.total }})</small>
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">No hay datos</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+</div>
+</div>
+
+</body>
+</html>

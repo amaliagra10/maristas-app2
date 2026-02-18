@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+{% load static %}    
+<head>
+    <meta charset="UTF-8">
+    <title>Actividad</title>
+    <link rel="stylesheet" href="{% static 'app_club/css/style_actividad.css' %}">
+</head>
+
+<body>
+
+<div class="header">
+    <img src="{% static 'img/logo_club.png' %}" alt="Logo">
+    <h1> Nueva Actividad</h1>
+
+    <div class="right-info">
+        <div><strong>HOCKEY DATA ENTRY</strong></div>
+        <div>Usuario: {{ user.username }}</div>
+         <div>
+            <a href="{% url 'logout' %}" class="logout-link">⏻</a>
+            <a href="{% url 'app_club:areas' %}" class="logout-link">↩</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="layout">
+
+    <!-- TARJETA IZQUIERDA → ACTIVIDAD -->
+    <div class="card-actividad">
+        <h2>
+            {% if editing %}
+                ✏️ Editar Actividad
+            {% else %}
+                ➕ Nueva Actividad
+            {% endif %}
+        </h2>
+
+        <form method="post">
+            {% csrf_token %}
+
+             {% if form.non_field_errors %}
+                <div class="error-box">
+                    {% for err in form.non_field_errors %}
+                        <div>{{ err }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- FILA 1: Tipo y Fecha -->
+            <div class="form-2col">
+                <div>
+                    {{ form.tipo.label_tag }}
+                    {{ form.tipo }}
+                </div>
+
+                <div>
+                    {{ form.fecha.label_tag }}
+                    {{ form.fecha }}
+                </div>
+            </div>
+
+            <!-- FILA 2: HORARIO -->
+            <div class="form-2col">
+                <div>
+                    {{ form.hora_inicio.label_tag }}
+                    {{ form.hora_inicio }}
+                </div>
+
+                <div>
+                    {{ form.hora_fin.label_tag }}
+                    {{ form.hora_fin }}
+                </div>
+            </div>
+
+            <!-- FILA 3: División y Rama -->
+            <div class="form-2col">
+                <div>
+                    {{ form.division.label_tag }}
+                    {{ form.division }}
+                </div>
+
+                <div>
+                    {{ form.rama.label_tag }}
+                    {{ form.rama }}
+                </div>
+            </div>
+
+            <!-- FILA 4: SEDE -->
+            <div class="form-2col">
+                <div>
+                    {{ form.sede_tipo.label_tag }}
+                    {{ form.sede_tipo }}
+                </div>
+
+                <div>
+                    {{ form.sede.label_tag }}
+                    {{ form.sede }}
+                </div>
+            </div>
+
+            <!-- FILA 5: Entrenadores / Ayudantes -->
+            <div class="form-2col">
+
+                <!-- DROPDOWN ENTRENADORES -->
+                <div class="multi" onclick="this.classList.toggle('open')">
+                    <button type="button">Entrenadores ▼</button>
+                    <div class="panel">
+                        {% for e in form.entrenadores %}
+                            <label>{{ e.tag }} {{ e.choice_label }}</label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- DROPDOWN AYUDANTES -->
+                <div class="multi" onclick="this.classList.toggle('open')">
+                    <button type="button">Ayudantes ▼</button>
+                    <div class="panel">
+                        {% for a in form.ayudantes %}
+                            <label>{{ a.tag }} {{ a.choice_label }}</label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- FILA 6: PF y Managers -->
+            <div class="form-2col">
+
+                <div class="multi" onclick="this.classList.toggle('open')">
+                    <button type="button">PFs ▼</button>
+                    <div class="panel">
+                        {% for p in form.pfs %}
+                            <label>{{ p.tag }} {{ p.choice_label }}</label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="multi" onclick="this.classList.toggle('open')">
+                    <button type="button">Managers ▼</button>
+                    <div class="panel">
+                        {% for m in form.managers %}
+                            <label>{{ m.tag }} {{ m.choice_label }}</label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn">
+                {% if editing %}
+                    Guardar Cambios
+                {% else %}
+                    Guardar Actividad
+                {% endif %}
+            </button>
+            {% if editing %}
+                <a href="{% url 'app_club:lista_actividades' %}" class="btn-link">
+                    ← Volver a la lista
+                </a>
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const sedeTipo = document.getElementById("id_sede_tipo");
+    const sedeSelect = document.getElementById("id_sede");
+
+    if (!sedeTipo || !sedeSelect) return;
+
+    sedeTipo.addEventListener("change", function () {
+        const tipo = this.value;
+
+        sedeSelect.innerHTML = "<option value=''>Seleccionar sede...</option>";
+
+        fetch(`/ajax/sedes/?tipo=${tipo}`)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(sede => {
+                    const option = document.createElement("option");
+                    option.value = sede.id;
+                    option.textContent = sede.nombre;
+
+                    // ⭐ DEFAULT VISUAL: Club Marista
+                    if (tipo === "club" && sede.nombre === "Club Marista") {
+                        option.selected = true;
+                    }
+
+                    sedeSelect.appendChild(option);
+                });
+            });
+    });
+});
+</script>
+</body>
+
+</html>
+

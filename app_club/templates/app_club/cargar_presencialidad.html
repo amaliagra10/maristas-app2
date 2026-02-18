@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Actividades</title>
+    <link rel="stylesheet" href="{% static 'app_club/css/style_actividad.css' %}">
+</head>
+
+<body>
+
+<div class="header">
+    <img src="{% static 'img/logo_club.png' %}" alt="Logo Club">
+    <h1>📋 CARGAR PRESENCIALIDADES</h1>
+
+    <div class="right-info">
+        <div><strong>HOCKEY DATA ENTRY</strong></div>
+        <div>Usuario: {{ user.username }}</div>
+        <div>
+            <a href="{% url 'logout' %}" class="logout-link">⏻</a>
+            <a href="{% url 'app_club:areas' %}" class="logout-link">↩</a>
+        </div>
+    </div>
+</div>
+
+<div class="contenedor-tabla">
+
+<div class="filter-bar">
+    <form method="get">
+        <div class="filter-row">
+
+            <div class="filter-item">
+                <label>Rama</label>
+                <select name="rama">
+                    <option value="">Todas</option>
+                    {% for r in ramas %}
+                        <option value="{{ r.id }}"
+                            {% if request.GET.rama == r.id|stringformat:"s" %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ r }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="filter-item">
+                <label>Tipo</label>
+                <select name="tipo">
+                    <option value="">Todos</option>
+                    {% for key, value in tipos %}
+                        <option value="{{ key }}"
+                            {% if request.GET.tipo == key %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ value }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="filter-item">
+                <button type="submit" class="btn-filter">🔍 Filtrar</button>
+
+                {% if request.GET %}
+                    <a href="{% url 'app_club:lista_actividades' %}"
+                       class="btn-clear">
+                        ❌ Limpiar
+                    </a>
+                {% endif %}
+            </div>
+
+        </div>
+    </form>
+</div>
+
+
+    <div class="table-container">
+
+    <h2>Actividades cargadas</h2>
+
+    {% if actividades %}
+       <table class="base-table">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Hora Ini</th>
+                <th>Hora Fin</th>
+                <th>Tipo</th>
+                <th>División</th>
+                <th>Rama</th>
+                <th>Sede</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for a in actividades %}
+            <tr>
+                <td>{{ a.fecha }}</td>
+                <td>{{ a.hora_inicio }}</td>
+                <td>{{ a.hora_fin }}</td>
+                <td>{{ a.get_tipo_display }}</td>
+                <td>{{ a.division }}</td>
+                <td>{{ a.rama }}</td>
+                <td>{{ a.sede }}</td>
+                <td class="acciones">
+                    <a href="{% url 'app_club:editar_actividad' a.id %}" title="Editar actividad">✏️</a>
+                    <a href="{% url 'app_club:presencialidad_entrenadores' a.id %}">📍</a>
+                    <a href="{% url 'app_club:presencialidad_jugadoras' a.id %}" title="Presencialidad jugadoras">👥</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    {% else %}
+        <p>No hay actividades cargadas.</p>
+    {% endif %}
+</div>
+
+</body>

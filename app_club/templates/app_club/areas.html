@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel EDESTE</title>
+  <link rel="stylesheet" href="{% static 'app_club/css/style_actividad.css' %}">
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <img src="{% static 'img/logo_club.png' %}" alt="Logo Club" class="logo" />
+
+    <h1>MARISTA RUGBY CLUB</h1>
+
+    <div class="right-info">
+      <div><strong>MARISTA DATA ENTRY</strong></div>
+      <div>Usuario: {{ user.username }}</div>
+      <div>
+        <a href="{% url 'logout' %}" class="logout-link">Cerrar</a>
+      </div> 
+    </div>
+  </header>
+
+  <!-- ===== CONTENIDO PRINCIPAL ===== -->
+  <main class="wrap">
+
+    {% if not perms.mi_app.acceso_reclamos and not perms.mi_app.acceso_obras %}
+      <div class="notice">
+        No tenés permisos habilitados para acceder a estas áreas. Pedí al administrador que te asigne permisos.
+      </div>
+    {% endif %}
+
+    <section class="grid_tarjeta" aria-label="Accesos a áreas">
+      <a href="{% url 'app_club:nueva_actividad' %}" class="tile"> ➕ Nueva Actividad</a>
+      <a href="{% url 'app_club:cargar_presencialidad' %}" class="tile"> ✏️ Presencialidad</a>
+      <a href="{% url 'app_club:reporte_asistencias' %}" class="tile"> 📈 Jugadoras</a>
+      <a href="{% url 'app_club:reporte_entrenadores' %}" class="tile"> 📊 Entrenadores</a>
+      
+    </section>
+  </main>
+
+</body>
+</html>

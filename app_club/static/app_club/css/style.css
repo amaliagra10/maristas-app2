@@ -1,0 +1,212 @@
+
+/**********************************************
+ * RESET + BASE
+ **********************************************/
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #d4d8df;
+    color: #1B1B1B;
+    line-height: 1.4;
+}
+
+
+
+/**********************************************
+ * HEADER
+ **********************************************/
+.header {
+    background: #0B3A70;
+    color: white;
+    padding: 20px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header img {
+    height: 60px;
+}
+
+.header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    flex: 1;
+    text-align: center;
+}
+
+.right-info {
+    text-align: right;
+    font-size: 14px;
+}
+
+
+
+/**********************************************
+ * CONTENEDOR PRINCIPAL (CARD GRANDE)
+ **********************************************/
+.page-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 30px 0;
+    background: #F4F6F9;
+}
+
+.card-full {
+    width: 95%;
+    max-width: 1300px;
+    background: white;
+    padding: 30px 40px;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+.card-section {
+    margin-bottom: 25px;
+}
+
+
+
+/**********************************************
+ * FILTROS
+ **********************************************/
+.filter-bar {
+    margin-bottom: 20px;
+}
+
+.filter-row {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filter-item label {
+    font-weight: 600;
+    margin-right: 5px;
+}
+
+.filter-item select {
+    padding: 8px 10px;
+    border: 1px solid #D8DDE3;
+    border-radius: 6px;
+    background: white;
+}
+
+.btn-filter {
+    background: #0B3A70;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-filter:hover {
+    background: #082E57;
+}
+
+.btn-clear {
+    color: #C62828;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+
+/**********************************************
+ * SEPARADOR
+ **********************************************/
+.divider {
+    height: 1px;
+    background: #DDD;
+    margin: 20px 0;
+}
+
+
+
+/**********************************************
+ * TABLA
+ **********************************************/
+/**********************************************
+ * TABLA MÁS SUAVE + LÍNEAS DIVISORIAS
+ **********************************************/
+.pres-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+/* ✔ Encabezado muy claro + texto oscuro */
+.pres-table th {
+    background: #E9EEF5;       /* gris-azulado MUY claro */
+    color: #0B1F33;            /* azul oscuro para buen contraste */
+    padding: 12px;
+    text-align: center;
+    font-weight: 600;
+    border-right: 1px solid #D6DEE7; /* línea vertical */
+}
+
+/* eliminar borde derecho en el último */
+.pres-table th:last-child {
+    border-right: none;
+}
+
+/* ✔ Celdas con líneas verticales y horizontales */
+.pres-table td {
+    padding: 12px;
+    background: #dae0e8;
+    border-bottom: 1px solid #E2E6EA;    /* línea horizontal suave */
+    border-right: 1px solid #E2E6EA;     /* línea vertical suave */
+    color: #0c0c0c;
+}
+
+/* eliminar borde derecho en el último */
+.pres-table td:last-child {
+    border-right: none;
+}
+
+/* ✔ Alternancia sutil */
+.pres-table tr:nth-child(even) td {
+    background: #F9FBFD;
+}
+
+
+
+
+/**********************************************
+ * OTROS ESTILOS
+ **********************************************/
+.btn {
+    background: #0B3A70;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    margin-top: 20px;
+}
+
+.btn:hover {
+    background: #082E57;
+}
+
+.no-actividad {
+    margin-top: 25px;
+    padding: 12px;
+    background: #F0F4FF;
+    border-left: 4px solid #0B3A70;
+    color: #0B3A70;
+    font-weight: bold;
+}

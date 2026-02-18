@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Presencialidad</title>
+    <link rel="stylesheet" href="{% static 'app_club/css/style_actividad.css' %}">
+    <script src="{% static 'app_club/geoloc.js' %}"></script>
+</head>
+
+<body>
+
+<div class="header">
+    <img src="{% static 'img/logo_club.png' %}" alt="Logo">
+    <h1>Presencialidad</h1>
+
+    <div class="right-info">
+        <div><strong>HOCKEY DATA ENTRY</strong></div>
+        <div>Usuario: {{ user.username }}</div>
+       <div>
+            <a href="{% url 'logout' %}" class="logout-link">⏻</a>
+            <a href="{% url 'app_club:areas' %}" class="logout-link">↩</a>
+        </div>  <a href="{% url 'logout' %}" class="logout-link">Cerrar sesión</a>
+    </div>
+</div>
+
+<div class="page-container">
+    <div class="card-full">
+
+        <h2>Actividad</h2>
+
+        <p><strong>Fecha:</strong> {{ actividad.fecha }}</p>
+        <p><strong>Horario:</strong> {{ actividad.hora_inicio }} – {{ actividad.hora_fin }}</p>
+        <p><strong>Tipo:</strong> {{ actividad.get_tipo_display }}</p>
+        <p><strong>División:</strong> {{ actividad.division }}</p>
+        <p><strong>Rama:</strong> {{ actividad.rama }}</p>
+        <p><strong>Sede:</strong> {{ actividad.sede }}</p>
+
+        <hr>
+
+    {% if not presencia.presente %}
+        <button type="button" class="btn" id="btn-checkin"
+        data-actividad="{{ actividad.id }}"
+        data-csrf="{{ csrf_token }}">
+            ✅ Marcar asistencia
+      </button>
+    {% else %}
+        <div class="alert-success">
+            ✔️ Ya marcaste tu asistencia
+        </div>
+    {% endif %}
+
+    </div>
+</div>
+
+</body>
+</html>
+
+

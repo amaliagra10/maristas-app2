@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Ingreso</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="{% static 'app_club/css/style_actividad.css' %}">
+</head>
+
+<body>
+
+<div class="login-wrapper">
+    <div class="login-container">
+
+        <img src="{% static 'img/logo_club.png' %}" alt="Logo">
+        <h1>Ingreso al sistema</h1>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="error-box">
+                    {% for err in form.non_field_errors %}
+                        <div>{{ err }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {{ form.username }}
+            {{ form.password }}
+
+            <input type="hidden" name="next" value="{{ request.GET.next }}">
+
+            <button type="submit" class="btn">Ingresar</button>
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>

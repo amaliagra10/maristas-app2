@@ -1,0 +1,638 @@
+/**********************************************
+ * 1) RESET + BASE
+ **********************************************/
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #F4F6F9;
+    color: #1B1B1B;
+    line-height: 1.4;
+}
+
+/**********************************************
+ * 2) HEADER
+ **********************************************/
+.header {
+    background: #0B3A70;
+    color: white;
+    padding: 20px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header img {
+    height: 60px;
+}
+
+.header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    flex: 1;
+    text-align: center;
+}
+
+.right-info {
+    text-align: right;
+    font-size: 14px;
+}
+
+.logout-link {
+    margin-top: 8px;
+    display: inline-block;
+    background: #C62828;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+}
+.logout-link:hover {
+    background: #A12020;
+}
+
+.volver-link {
+     margin-top: 8px;
+    display: inline-block;
+    background: #C62828;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.volver-link:hover {
+    background: #A12020;
+}
+
+
+
+/**********************************************
+ * 3) LAYOUT - contendores
+ **********************************************/
+
+ /* actividad*/
+ .layout {
+    display: flex;
+    gap: 30px;
+    padding: 30px;
+}
+
+.page-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 30px 0;
+    background: #F4F6F9;
+}
+
+.card-full {
+    width: 95%;
+    max-width: 1300px;
+    background: white;
+    padding: 30px 40px;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+.card-section {
+    margin-bottom: 25px;
+}
+
+.card {
+    background: white;
+    padding: 28px;
+    border-radius: 14px;
+    box-shadow: 0px 4px 16px rgba(0,0,0,0.08);
+    flex: 1;
+}
+
+.card h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #0B3A70;
+}
+
+@media (max-width: 900px) {
+    .layout {
+        flex-direction: column;
+    }
+}
+
+
+/*lista actividad*/
+.contenedor-tabla {
+    max-width: 1200px;      /* 👈 controla el ancho */
+    margin: 30px auto;      /* centra */
+    padding: 0 20px;        /* aire lateral */
+}
+
+.filtro-contenedor-tabla {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    margin-bottom: 20px;
+    max-width: 600px;   /* 👈 evita que se estire */
+}
+
+.filtro-contenedor-tabla input[type="date"] {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #CBD5E1;
+    font-size: 14px;
+}
+
+.filtro-contenedor-tabla label {
+    font-weight: 600;
+}
+
+
+/* RESPONSIVE – CELULARES Y TABLETS*/
+
+@media (max-width: 900px) {
+    .layout {
+        flex-direction: column;
+    }
+
+    .card-actividad,
+    .card-presencialidad {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+}
+
+/* ACCIONES EN TABLAS */
+.acciones {
+    display: flex;
+    flex-direction: row;   /* 👈 uno debajo del otro */
+    align-items: center;
+    gap: 10px;
+}
+
+.acciones a {
+    font-size: 22px;          /* 👈 tamaño del ícono */
+    text-decoration: none;
+    line-height: 1;
+    transition: transform 0.15s ease;
+}
+
+
+
+/**********************************************
+ * 4) FORMULARIO 2 POR FILA
+ **********************************************/
+.form-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 26px;
+    margin-bottom: 20px;
+}
+
+.form-2col label {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid #D8DDE3;
+    border-radius: 6px;
+    background: white;
+    font-size: 14px;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #0B3A70;
+    box-shadow: 0 0 0 2px rgba(11,58,112,0.15);
+}
+
+/**********************************************
+ * 5) DROPDOWN MULTISELECT (STAFF)
+ **********************************************/
+.multi {
+    position: relative;
+}
+
+.multi button {
+    width: 100%;
+    padding: 10px;
+    background: white;
+    border: 1px solid #D8DDE3;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+}
+
+.multi button:hover {
+    background: #888f96;
+}
+
+.multi .panel {
+    position: absolute;
+    display: none;
+    width: 100%;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    padding: 10px;
+    margin-top: 4px;
+    z-index: 100;
+}
+
+.multi.open .panel {
+    display: block;
+}
+
+.multi .panel label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 2px;
+    font-size: 14px;
+}
+
+.multi .panel label:hover {
+    background: #F4F6F9;
+}
+
+.multi input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #0B3A70;
+}
+
+/**********************************************
+ * 6) TABLAS
+ **********************************************/
+.table-container {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 18px;
+    margin-top: 20px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    overflow-x: auto;
+    max-width: 1200px;   /* 👈 ancho máximo */
+    margin: 0 auto;      /* centra */
+}
+    
+
+.base-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+}
+
+.base-table th {
+    background: #0B3A70;
+    color: white;
+    padding: 12px;
+    text-align: center;
+    white-space: normal;      /* 👈 permite salto de línea */
+    word-break: break-word;  /* 👈 corta palabras largas */
+    line-height: 1.2;
+}
+
+/* ===== HEADER ===== */
+.base-table thead th {
+    background: #0B3A70;
+    color: #ffffff;
+    padding: 12px 10px;
+    font-size: 16px;        /* 👈 no chiquito */
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.2;
+
+    white-space: normal;
+    word-break: break-word;
+}
+
+.base-table td {
+    padding: 12px 10px;
+    font-size: 16px;        /* 👈 mismo tamaño que header */
+    text-align: center;
+    background: #FAFAFA;
+    border-bottom: 1px solid #ECECEC;
+}
+
+.chk {
+    width: 20px;
+    height: 20px;
+    accent-color: #0B3A70;
+}
+
+.rend {
+    width: 70px;
+    padding: 6px;
+    text-align: center;
+    border: 1px solid #D8DDE3;
+    border-radius: 6px;
+}
+
+/**********************************************
+ * 7) BOTONES
+ **********************************************/
+.btn {
+    background: #0B3A70;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    margin-top: 20px;
+}
+
+.btn:hover {
+    background: #082E57;
+}
+
+/**********************************************
+ * 8) MENSAJE SIN ACTIVIDAD
+ **********************************************/
+.no-actividad {
+    margin-top: 25px;
+    padding: 12px;
+    background: #F0F4FF;
+    border-left: 4px solid #0B3A70;
+    color: #0B3A70;
+    font-weight: bold;
+}
+
+/**********************************************
+ * 9) LOGIN
+ **********************************************/
+.login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #e7f1ff; /* celeste claro */
+}
+
+.login-container {
+    max-width: 400px;
+    width: 100%;
+    background-color: #ffffff;
+    padding: 32px 40px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(13, 110, 253, 0.25);
+    text-align: center;
+}
+
+.login-container img {
+    width: 140px;
+    margin-bottom: 18px;
+}
+
+.login-container h1 {
+    color: #0a3d62; /* azul oscuro */
+    margin-bottom: 28px;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.login-container form {
+    text-align: left;
+}
+
+.login-container input[type="text"],
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #b6d4fe;
+    border-radius: 6px;
+    font-size: 1rem;
+    margin-bottom: 14px;
+}
+
+.login-container input:focus {
+    outline: none;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.2);
+}
+
+.login-container .btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #0d6efd; /* azul principal */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.login-container .btn:hover {
+    background-color: #0b5ed7;
+}
+
+.error-box {
+    background: #f8d7da;
+    color: #842029;
+    border: 1px solid #f5c2c7;
+    padding: 10px 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+  /**************************************
+ * 10 TILES / TARJETAS DE NAVEGACIÓN
+ **************************************/
+
+.grid_tarjeta {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 260px));
+  justify-content: center;
+  margin-top: 24px;
+}
+
+/* Tarjeta normal */
+a.tile,
+.tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+
+  background: #ffffff;
+  color: var(--azul-principal);
+
+  border: 2px solid var(--celeste-principal);
+  border-radius: 16px;
+
+  padding: 42px 22px;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+
+  box-shadow: 0 2px 6px rgba(30, 58, 138, 0.12);
+
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+/* Hover */
+a.tile:hover {
+  background: var(--celeste-claro);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(30, 58, 138, 0.18);
+  border-color: var(--azul-principal);
+}
+
+/* Tarjeta deshabilitada */
+.tile.disabled {
+  background: var(--gris-suave);
+  color: #94a3b8;
+  border: 2px dashed var(--rojo-acento);
+  box-shadow: none;
+  pointer-events: none;
+}
+
+/* Aviso debajo de las tarjetas */
+.notice {
+  margin-top: 16px;
+  padding: 14px 16px;
+
+  border: 1px solid var(--rojo-acento);
+  background: #fee2e2;
+  color: #7f1d1d;
+
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+  /**************************************
+ * 10 ESTILO DATE-TIME
+ **************************************/
+
+/* Unificar estilo DATE y TIME */
+input[type="date"],
+input[type="time"],
+select {
+    width: 100%;
+    height: 44px;
+
+    padding: 8px 12px;
+    font-size: 16px;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+
+    background-color: #ffffff;
+    color: #0f172a;
+
+    box-sizing: border-box;
+}
+
+/* Hover / focus coherente */
+input[type="date"]:focus,
+input[type="time"]:focus,
+select:focus {
+    outline: none;
+    border-color: #2563eb;     /* azul app */
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+   /**************************************
+ * 11 AJUSTES CELULAR
+ **************************************/
+/*header*/
+ 
+@media (max-width: 640px) {
+  .header {
+    padding: 10px 12px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .header img {
+    height: 36px;
+  }
+}
+
+/*columnas*/
+@media (max-width: 480px) {
+  .form-2col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*boton*/
+@media (max-width: 640px) {
+  .btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 18px;
+  }
+}
+
+/**********************************************
+ * FILTROS DE TABLAS
+ **********************************************/
+.filter-bar {
+    margin-bottom: 20px;
+}
+
+.filter-row {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filter-item label {
+    font-weight: 600;
+    margin-right: 5px;
+}
+
+.filter-item select {
+    padding: 8px 10px;
+    border: 1px solid #D8DDE3;
+    border-radius: 6px;
+    background: white;
+}
+
+.btn-filter {
+    background: #0B3A70;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-filter:hover {
+    background: #082E57;
+}
+
+.btn-clear {
+    color: #C62828;
+    text-decoration: none;
+    font-weight: bold;
+}

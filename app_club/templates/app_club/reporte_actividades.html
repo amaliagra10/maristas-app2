@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <title>Editar actividad</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="{% static 'app_club/linked-selects.js' %}" defer></script>
+  <script src="{% static 'mi_app/seleccionador.js' %}" defer></script>
+  <script src="{% static 'app_club/checkbok.js' %}" defer></script>
+  <link rel="stylesheet" href="{% static 'app_club/css/style.css' %}">
+
+  
+</head>
+
+<body>
+  <div class="header">
+    <img src="{% static 'img/logo_club.png' %}" alt="Logo EDESTE">
+    <h1>Asistencias y Rendimiento</h1>
+    <div class="right-info">
+      <div><strong>HOCKEY DATA ENTRY</strong></div>
+      <div>Usuario: {{ user.username }}</div>
+      <div>
+            <a href="{% url 'logout' %}" class="logout-link">⏻</a>
+            <a href="{% url 'app_club:areas' %}" class="logout-link">↩</a>
+      </div>
+    </div>
+  </div>
+
+<div class="page-container">
+      <div class="card-full">
+
+    <!-- 🔹 BLOQUE DE FILTROS -->
+    <div class="card-section">
+        <form method="get" class="filter-bar">
+
+            <div class="filter-row">
+                  
+                <div class="filter-item">
+                    <label for="division"><strong>División:</strong></label>
+                    <select name="division" id="division">
+                        <option value="">Todas</option>
+                        {% for d in divisiones %}
+                        <option value="{{ d.id }}" {% if division_seleccionada == d.id|stringformat:"s" %}selected{% endif %}>{{ d.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="filter-item">
+                    <label for="rama"><strong>Rama:</strong></label>
+                    <select name="rama" id="rama">
+                        <option value="">Todas</option>
+                        {% for r in ramas %}
+                        <option value="{{ r.id }}" {% if rama_seleccionada == r.id|stringformat:"s" %}selected{% endif %}>{{ r.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>    
+           <div class="filter-row">
+                <!-- Fecha desde -->
+                <div class="filter-item">
+                    <label><strong>Desde</strong></label>
+                    <input type="date" name="desde" value="{{ fecha_desde }}">
+                </div>
+
+                <!-- Fecha hasta -->
+                <div class="filter-item">
+                    <label><strong>Hasta</strong></label>
+                    <input type="date" name="hasta" value="{{ fecha_hasta }}">
+                </div>
+
+                <button type="submit" class="btn">🔍 Filtrar</button>
+        
+                {% if request.GET.division or request.GET.rama %}
+                <a href="{% url 'app_club:reporte_actividades' %}" class="btn-clear">❌ Limpiar</a>
+                {% endif %}
+            </div>
+
+        </form>
+    </div>
+
+    <!-- 🔹 SEPARADOR -->
+    <div class="divider"></div>
+
+    <!-- 🔹 BLOQUE DE TABLA --> 
+    <div class="card-section">        
+     {% if mostrar_tabla %}
+        <table class="pres-table">
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>Fecha</th>
+                    <th>Tipo</th>
+                    <th>Entrenadores.</th>
+                    <th>Ayudantes</th>
+                    <th>PFS</th>
+                    <th>Managers</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for a in actividades %}
+                <tr>
+                    <td>{{ a.id }}</td>
+                    <td>{{ a.fecha }}</td>
+                    <td>{{ a.get_tipo_display }}</td>
+
+                    <td>
+                        {% for e in a.entrenadores.all %}
+                            {{ e.nombre }}{% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            -
+                        {% endfor %}
+                    </td>
+
+                    <td>
+                        {% for ay in a.ayudantes.all %}
+                            {{ ay.nombre }}{% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            -
+                        {% endfor %}
+                    </td>
+
+                    <td>
+                        {% for p in a.pfs.all %}
+                            {{ p.nombre }}{% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            -
+                        {% endfor %}
+                    </td>
+
+                    <td>
+                        {% for m in a.managers.all %}
+                            {{ m.nombre }}{% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            -
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}   
+        <div style="padding:15px; margin:20px 0; background:#F0F4FF; border-left:4px solid #0B3A70; color:#0B3A70; border-radius:5px;">
+              Seleccione División y Rama para ver el reporte de asistencias.
+      </div>
+    {% endif %}    
+    </div>
+ </div>
+</div>
+</body>
+</html>
+
