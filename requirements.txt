@@ -3,6 +3,8 @@ gunicorn
 whitenoise
 djangorestframework
 django-import-export
+openpyxl
+
 
 
 
