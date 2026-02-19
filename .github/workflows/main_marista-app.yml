@@ -58,13 +58,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: python-app
-      
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_8BA9D93897B74342AB2BB5AC6E18A1F0 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_18751A1C06954B38A4D8E57C62C913DF }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_10326480565740F2BDB46BD496148BE7 }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
@@ -72,5 +65,8 @@ jobs:
         with:
           app-name: 'marista-app'
           slot-name: 'Production'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: .
 
           
+
