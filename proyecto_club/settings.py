@@ -28,7 +28,7 @@ LOGOUT_REDIRECT_URL = "/login/"
 SECRET_KEY = os.environ.get("SECRET_KEY", "dev-only-change-me")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["marista-mza.azurewebsites.net"]
 
