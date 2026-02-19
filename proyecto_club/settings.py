@@ -16,7 +16,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "dev-only-change-me")
 DEBUG = os.environ.get("DEBUG", "0") == "1" if IS_AZURE else True
 
 ALLOWED_HOSTS = [
-    "marista-mza.azurewebsites.net",
+    "marista-app.azurewebsites.net",
     ".azurewebsites.net",
     "localhost",
     "127.0.0.1",
@@ -28,7 +28,7 @@ USE_X_FORWARDED_HOST = True
 
 # CSRF (Azure)
 CSRF_TRUSTED_ORIGINS = [
-    "https://marista-mza.azurewebsites.net",
+    "https://marista-app.azurewebsites.net",
 ]
 
 # Cookies secure only in production (Azure)
