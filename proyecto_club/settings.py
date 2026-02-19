@@ -41,6 +41,21 @@ CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
+ALLOWED_HOSTS = [
+    "marista-mza.azurewebsites.net",
+    ".azurewebsites.net",
+    "localhost",
+    "127.0.0.1",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://marista-mza.azurewebsites.net",
+]
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+USE_X_FORWARDED_HOST = True
+
+
 
 # Application definition
 
@@ -91,10 +106,16 @@ WSGI_APPLICATION = "proyecto_club.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+DB_NAME = os.path.join(BASE_DIR, "db.sqlite3")
+
+# En Azure App Service existe WEBSITE_HOSTNAME
+if os.environ.get("WEBSITE_HOSTNAME"):
+    DB_NAME = "/home/db.sqlite3"
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": DB_NAME,
     }
 }
 
