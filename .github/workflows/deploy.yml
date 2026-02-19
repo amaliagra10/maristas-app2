@@ -28,6 +28,7 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: "marista-app"
+          resource-group-name: "app-club-marista"
           slot-name: "Production"
-          package: .
+          package: 
 
