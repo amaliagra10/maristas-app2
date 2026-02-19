@@ -30,7 +30,16 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "dev-only-change-me")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['marista-mza.azurewebsites.net']
+ALLOWED_HOSTS = ["marista-mza.azurewebsites.net"]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://marista-mza.azurewebsites.net",
+]
+
+# Si vas a usar cookies seguras (recomendado en Azure):
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 
 # Application definition
@@ -46,6 +55,7 @@ INSTALLED_APPS = [
     'import_export', 
     "app_club",
 ]
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
